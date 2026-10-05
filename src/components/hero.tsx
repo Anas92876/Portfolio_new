@@ -141,17 +141,19 @@ export function Hero() {
                 <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </Link>
             </Magnetic>
-            <Magnetic>
-              <a
-                href={profile.resume}
-                target="_blank"
-                rel="noopener"
-                className="inline-flex h-12 items-center gap-2 rounded-full border border-line-strong bg-elev/50 px-6 text-sm font-medium backdrop-blur transition-colors hover:bg-line active:scale-95"
-              >
-                <Download className="size-4" />
-                Résumé
-              </a>
-            </Magnetic>
+            {profile.resume && (
+              <Magnetic>
+                <a
+                  href={profile.resume}
+                  target="_blank"
+                  rel="noopener"
+                  className="inline-flex h-12 items-center gap-2 rounded-full border border-line-strong bg-elev/50 px-6 text-sm font-medium backdrop-blur transition-colors hover:bg-line active:scale-95"
+                >
+                  <Download className="size-4" />
+                  Résumé
+                </a>
+              </Magnetic>
+            )}
           </div>
         </motion.div>
       </motion.div>

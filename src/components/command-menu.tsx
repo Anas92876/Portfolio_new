@@ -77,13 +77,17 @@ export function CommandMenu() {
         icon: Moon,
         run: toggle,
       },
-      {
-        id: "resume",
-        group: "Actions",
-        label: "Download résumé",
-        icon: Download,
-        run: () => window.open(profile.resume, "_blank"),
-      },
+      ...(profile.resume
+        ? [
+            {
+              id: "resume",
+              group: "Actions",
+              label: "Download résumé",
+              icon: Download,
+              run: () => window.open(profile.resume, "_blank"),
+            },
+          ]
+        : []),
       ...socials
         .filter((s) => s.label !== "Email")
         .map((s) => ({

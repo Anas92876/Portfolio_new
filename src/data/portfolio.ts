@@ -30,16 +30,25 @@ export const profile = {
   location: "Damascus, Syria",
   timezone: "Asia/Damascus",
   email: "hello@example.com",
-  resume: "/resume.pdf",
+  /** Path to your CV in /public, e.g. "/resume.pdf". Leave undefined to hide every Résumé button. */
+  resume: undefined as string | undefined,
   /** Your photo in /public. Used on the About page. */
   photo: "/portrait.jpg",
   available: true,
   availability: "Available for remote opportunities",
-  siteUrl: "https://example.com",
+  /**
+   * Public address of the site, used for link previews, the sitemap and search engines.
+   * Set NEXT_PUBLIC_SITE_URL for a custom domain; on Vercel it otherwise uses the production URL automatically.
+   */
+  siteUrl:
+    process.env.NEXT_PUBLIC_SITE_URL ??
+    (process.env.VERCEL_PROJECT_PRODUCTION_URL
+      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+      : "http://localhost:3000"),
 };
 
 export const socials: Social[] = [
-  { label: "GitHub", href: "https://github.com/", handle: "@username" },
+  { label: "GitHub", href: "https://github.com/Anas92876", handle: "@Anas92876" },
   { label: "LinkedIn", href: "https://www.linkedin.com/in/anas92876", handle: "in/anas92876" },
   { label: "Email", href: `mailto:${profile.email}`, handle: profile.email },
 ];
