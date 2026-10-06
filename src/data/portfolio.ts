@@ -29,9 +29,9 @@ export const profile = {
     "I build modern web applications, scalable backend systems, SaaS platforms and digital products — and, when a problem calls for it, the hardware behind them.",
   location: "Damascus, Syria",
   timezone: "Asia/Damascus",
-  email: "hello@example.com",
+  email: "mhab36817@gmail.com",
   /** Path to your CV in /public, e.g. "/resume.pdf". Leave undefined to hide every Résumé button. */
-  resume: undefined as string | undefined,
+  resume: "/CV/Anas_Al_Homsi_CV_2026.pdf" as string | undefined,
   /** Your photo in /public. Used on the About page. */
   photo: "/portrait.jpg",
   available: true,
