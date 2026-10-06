@@ -77,7 +77,7 @@ export function Footer() {
                   <li>
                     <a href={profile.resume} target="_blank" rel="noopener" className={linkClass}>
                       <Download className="size-3.5" />
-                      Résumé
+                      Download CV
                     </a>
                   </li>
                 )}

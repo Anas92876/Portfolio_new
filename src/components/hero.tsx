@@ -183,7 +183,7 @@ export function Hero() {
                   className="inline-flex h-12 items-center gap-2 rounded-full border border-line-strong bg-elev/50 px-6 text-sm font-medium backdrop-blur transition-colors hover:bg-line active:scale-95"
                 >
                   <Download className="size-4" />
-                  Résumé
+                  Download CV
                 </a>
               </Magnetic>
             )}

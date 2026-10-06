@@ -82,7 +82,7 @@ export function CommandMenu() {
             {
               id: "resume",
               group: "Actions",
-              label: "Download résumé",
+              label: "Download CV",
               icon: Download,
               run: () => window.open(profile.resume, "_blank"),
             },

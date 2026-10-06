@@ -30,7 +30,7 @@ export const profile = {
   location: "Damascus, Syria",
   timezone: "Asia/Damascus",
   email: "mhab36817@gmail.com",
-  /** Path to your CV in /public, e.g. "/resume.pdf". Leave undefined to hide every Résumé button. */
+  /** Path to your CV in /public, e.g. "/resume.pdf". Leave undefined to hide every "Download CV" button. */
   resume: "/CV/Anas_Al_Homsi_CV_2026.pdf" as string | undefined,
   /** Your photo in /public. Used on the About page. */
   photo: "/portrait.jpg",
