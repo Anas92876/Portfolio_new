@@ -27,6 +27,7 @@ function ProjectCard({
   range,
   targetScale,
   stack,
+  priority,
 }: {
   project: Project;
   index: number;
@@ -34,6 +35,8 @@ function ProjectCard({
   range: [number, number];
   targetScale: number;
   stack: boolean;
+  /** First card on the /projects page: its image is the largest thing on screen. */
+  priority: boolean;
 }) {
   const href = `/projects/${project.slug}`;
   // As later cards slide over this one, shrink and dim it to create depth.
@@ -55,6 +58,7 @@ function ProjectCard({
             <Link href={href} aria-label={`${project.title} case study`} tabIndex={-1} className="relative block">
               <ProjectVisual
                 project={project}
+                priority={priority}
                 className="aspect-[16/10] sm:aspect-[2/1] lg:aspect-auto lg:h-[min(52vh,560px)]"
               />
             </Link>
@@ -192,6 +196,7 @@ export function Projects({ limit, headingAs }: { limit?: number; headingAs?: "h1
             range={[i / n, 1]}
             targetScale={1 - (n - 1 - i) * 0.025}
             stack={stack}
+            priority={!preview && i === 0}
           />
         ))}
       </div>

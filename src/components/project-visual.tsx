@@ -9,10 +9,13 @@ export function ProjectVisual({
   project,
   compact = false,
   className = "aspect-[4/3]",
+  priority = false,
 }: {
   project: Project;
   compact?: boolean;
   className?: string;
+  /** Load immediately with high priority — for the image at the top of the page. */
+  priority?: boolean;
 }) {
   const c = (l: number, ch: number, a = 1) => `oklch(${l} ${ch} ${project.hue} / ${a})`;
 
@@ -25,7 +28,9 @@ export function ProjectVisual({
           src={project.cover}
           alt={`${project.title} website screenshot`}
           fill
-          sizes={compact ? "(min-width: 1024px) 30vw, 90vw" : "(min-width: 1024px) 60vw, 100vw"}
+          sizes={compact ? "(min-width: 1024px) 30vw, 90vw" : "(min-width: 1280px) 1280px, 100vw"}
+          loading={priority ? "eager" : "lazy"}
+          fetchPriority={priority ? "high" : "auto"}
           quality={90}
           style={{ objectPosition: `${project.coverFocus ?? 50}% top` }}
           className="object-cover"

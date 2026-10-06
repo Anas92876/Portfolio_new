@@ -120,6 +120,7 @@ export function About({ headingAs }: { headingAs?: "h1" | "h2" }) {
               sizes="(min-width: 768px) 33vw, 100vw"
               quality={90}
               loading="eager"
+              fetchPriority="high"
               className="object-cover object-[50%_30%] transition-transform duration-[1.2s] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/photo:scale-[1.04]"
             />
             <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" />

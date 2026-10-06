@@ -12,7 +12,7 @@ import {
 import { ArrowDown, ArrowUpRight, Download, MapPin } from "lucide-react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useInView } from "motion/react";
 import { profile, socials } from "@/data/portfolio";
 import { useLocalTime } from "@/lib/hooks";
@@ -22,6 +22,35 @@ import { ease } from "./reveal";
 
 // WebGL scene is client-only and code-split so it never blocks first paint.
 const HeroScene = dynamic(() => import("./hero-scene"), { ssr: false });
+
+/**
+ * The 3D scene is decoration, and three.js is the heaviest script on the page. Hold it back until
+ * the visitor first interacts, or the browser has been idle for a few seconds, so it never competes
+ * with the text for the first paint.
+ */
+function useDeferredScene() {
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    const events = ["pointermove", "pointerdown", "touchstart", "wheel", "scroll", "keydown"] as const;
+    let idleId: number | undefined;
+    const start = () => {
+      setReady(true);
+      cleanup();
+    };
+    const cleanup = () => {
+      events.forEach((e) => window.removeEventListener(e, start));
+      clearTimeout(timer);
+      if (idleId !== undefined) window.cancelIdleCallback?.(idleId);
+    };
+    events.forEach((e) => window.addEventListener(e, start, { once: true, passive: true }));
+    const timer = setTimeout(() => {
+      idleId = window.requestIdleCallback ? window.requestIdleCallback(start, { timeout: 2000 }) : undefined;
+      if (idleId === undefined) start();
+    }, 3500);
+    return cleanup;
+  }, []);
+  return ready;
+}
 
 const headline = [
   { text: "Engineering", serif: false },
@@ -48,6 +77,7 @@ export function Hero() {
   const contentY = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : 120]);
   const contentOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
   const inView = useInView(ref, { margin: "0px 0px -10% 0px" });
+  const sceneReady = useDeferredScene();
 
   return (
     <section
@@ -66,16 +96,18 @@ export function Hero() {
         <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-bg" />
       </div>
 
-      {/* 3D object */}
+      {/* 3D object — loaded only once the page is ready, then faded in */}
       <div aria-hidden className="pointer-events-none absolute inset-0 opacity-60 lg:left-[38%] lg:opacity-100">
-        <motion.div
-          className="size-full"
-          initial={{ opacity: 0, scale: 0.85 }}
-          animate={{ opacity: 0.6, scale: 1 }}
-          transition={{ duration: 1.8, ease, delay: 0.6 }}
-        >
-          <HeroScene frameloop={!inView ? "never" : reduce ? "demand" : "always"} />
-        </motion.div>
+        {sceneReady && (
+          <motion.div
+            className="size-full"
+            initial={{ opacity: 0, scale: 0.85 }}
+            animate={{ opacity: 0.6, scale: 1 }}
+            transition={{ duration: 1.8, ease }}
+          >
+            <HeroScene frameloop={!inView ? "never" : reduce ? "demand" : "always"} />
+          </motion.div>
+        )}
       </div>
 
       <motion.div
@@ -120,10 +152,11 @@ export function Hero() {
           ))}
         </h1>
 
+        {/* Visible from the first paint (only slides in) — this intro is the page's largest content. */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, ease, delay: 1 }}
+          initial={reduce ? false : { y: 20 }}
+          animate={{ y: 0 }}
+          transition={{ duration: 0.9, ease, delay: 0.3 }}
           className="mt-10 grid gap-10 md:grid-cols-12 md:items-end"
         >
           <p className="max-w-xl text-lg leading-relaxed text-pretty text-muted md:col-span-6">

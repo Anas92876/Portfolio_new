@@ -38,7 +38,7 @@ function Blob({ dark }: { dark: boolean }) {
     <group ref={group}>
       <Float speed={1.6} rotationIntensity={0.6} floatIntensity={0.8}>
         <mesh>
-          <icosahedronGeometry args={[1.35, 64]} />
+          <icosahedronGeometry args={[1.35, 32]} />
           <MeshDistortMaterial
             color={dark ? "#14241a" : "#cfe6d6"}
             roughness={0.12}
